@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html = lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue App</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+        <div id="app" class="container mt-4">
+          <section>
+            <h2 class="mb-4">Grocery List</h2>
+            <ul class="list-group mb-4">
+              <li v-for="item in incompleteItems" :key="item.id" class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ item.name }}</span>
+                <input type="checkbox" v-model="item.completed" @change="moveToCompleted(item)" class="ml-2">
+              </li>
+            </ul>
+            <h2 class="mb-4">Completed Items</h2>
+            <ul class="list-group">
+              <li v-for="item in completedItems" :key="item.id" class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ item.name }}</span>
+                <input type="checkbox" v-model="item.completed" @change="moveToIncomplete(item)" class="ml-2" checked>
+            </li>
+          </ul>
+        </section>
+      </div>
+    
+      <script>
+        const { createApp } = Vue;
+        createApp({
+      data() {
+        return {
+          items: [
+            { id: 1, name: 'Orange', completed: false },
+            { id: 2, name: 'Apples', completed: false },
+            { id: 3, name: 'Meat', completed: false },
+            { id: 4, name: 'Cheese', completed: false },
+            { id: 5, name: 'Milk', completed: false },
+            { id: 6, name: 'Bread', completed: false },
+            { id: 7, name: 'Eggs', completed: false },
+            { id: 8, name: 'Lettuce', completed: false },
+            { id: 9, name: 'Carrot', completed: false },
+            { id: 10, name: 'Water', completed: false },
+          ]
+        };
+      },
+      computed: {
+        incompleteItems() {
+          return this.items.filter(item => !item.completed);
+        },
+        completedItems() {
+          return this.items.filter(item => item.completed);
+        }
+      },
+      methods: {
+        moveToCompleted(item) {
+          item.completed = true;
+        },
+        moveToIncomplete(item) {
+          item.completed = false;
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>    
